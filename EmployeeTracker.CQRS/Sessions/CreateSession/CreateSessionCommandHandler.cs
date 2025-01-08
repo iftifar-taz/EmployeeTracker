@@ -6,22 +6,29 @@ using EmployeeTracker.Context.Contracts;
 using EmployeeTracker.Context.Schemas;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace EmployeeTracker.CQRS.Sessions.CreateSession
 {
-    public class CreateSessionCommandHandler(IUnitOfWork unitOfWork, IConfiguration configuration) : IRequestHandler<CreateSessionCommand, SessionResponseDto>
+    public class CreateSessionCommandHandler(IUnitOfWork unitOfWork, ILogger<CreateSessionCommandHandler> logger, IConfiguration configuration) : IRequestHandler<CreateSessionCommand, SessionResponseDto>
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly ILogger<CreateSessionCommandHandler> _logger = logger;
         private readonly IConfiguration _configuration = configuration;
 
         public async Task<SessionResponseDto> Handle(CreateSessionCommand command, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.UserManager.FindByEmailAsync(command.Email) ?? throw new Exception("Invalid Credentials");
+            var user = await _unitOfWork.UserManager.FindByEmailAsync(command.Email);
+            if (user is null)
+            {
+                _logger.LogWarning($"Invalid Credentials for {command.Email}");
+                throw new Exception("Invalid Credentials");
+            }    
             var result = await _unitOfWork.UserManager.CheckPasswordAsync(user, command.PasswordRaw);
-
             if (!result)
             {
+                _logger.LogWarning($"Invalid Credentials for {command.Email}");
                 throw new Exception("Invalid Credentials");
             }
 

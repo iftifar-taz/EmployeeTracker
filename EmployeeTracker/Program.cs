@@ -11,8 +11,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 var JWTSetting = builder.Configuration.GetSection("JWTSetting");
 builder.Services.AddDbContext<DataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -83,6 +90,7 @@ builder.Services.AddSwaggerGen(x =>
 });
 
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 
 // Seed data
 await DbSeeder.SeedUsersAndRolesAsync(app.Services);
