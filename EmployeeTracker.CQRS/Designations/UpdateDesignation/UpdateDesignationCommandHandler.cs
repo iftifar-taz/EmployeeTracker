@@ -15,6 +15,7 @@ namespace EmployeeTracker.CQRS.Designations.UpdateDesignation
         {
             var designation = await _unitOfWork.DesignationManager.FirstOrDefaultAsync(x => x.DesignationId == command.DesignationId, cancellationToken) ?? throw new BadRequestException("Designation does not exist.");
             designation.DesignationName = command.DesignationName;
+            designation.DesignationKey = command.DesignationKey;
             designation.Description = command.Description;
 
             _unitOfWork.DesignationManager.Update(designation);

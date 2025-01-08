@@ -11,6 +11,12 @@ namespace EmployeeTracker.CQRS.Designations.UpdateDesignation
                 .WithMessage("Designation Name is required.")
                 .MaximumLength(64)
                 .WithMessage("Designation Name must not exceed 64 characters.");
+
+            RuleFor(x => x.DesignationKey)
+                .NotEmpty()
+                .WithMessage("Designation Key is required.")
+                .MaximumLength(16)
+                .WithMessage("Designation Key must not exceed 16 characters.");
         }
     }
 }

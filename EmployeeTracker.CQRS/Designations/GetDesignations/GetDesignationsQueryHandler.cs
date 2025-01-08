@@ -13,7 +13,9 @@ namespace EmployeeTracker.CQRS.Designations.GetDesignations
         {
             return await _unitOfWork.DesignationManager.AsNoTracking().Include(x => x.Employees).Select(x => new DesignationResponseDto
             {
+                DesignationId = x.DesignationId,
                 DesignationName = x.DesignationName,
+                DesignationKey = x.DesignationKey,
                 Description = x.Description,
                 EmployeeCount = x.Employees != null ? x.Employees.Count() : 0,
             }).ToListAsync(cancellationToken);

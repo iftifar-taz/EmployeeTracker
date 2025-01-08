@@ -15,6 +15,7 @@ namespace EmployeeTracker.CQRS.Departments.UpdateDepartment
         {
             var department = await _unitOfWork.DepartmentManager.FirstOrDefaultAsync(x => x.DepartmentId == command.DepartmentId, cancellationToken) ?? throw new BadRequestException("Department does not exist.");
             department.DepartmentName = command.DepartmentName;
+            department.DepartmentKey = command.DepartmentKey;
             department.Description = command.Description;
 
             _unitOfWork.DepartmentManager.Update(department);

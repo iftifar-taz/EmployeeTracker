@@ -14,7 +14,7 @@ namespace EmployeeTracker.CQRS.Designations.CreateDesignation
 
         public async Task Handle(CreateDesignationCommand command, CancellationToken cancellationToken)
         {
-            var designation = await _unitOfWork.DesignationManager.FirstOrDefaultAsync(x => string.Equals(x.DesignationName, command.DesignationName, StringComparison.OrdinalIgnoreCase), cancellationToken);
+            var designation = await _unitOfWork.DesignationManager.FirstOrDefaultAsync(x => x.DesignationKey == command.DesignationKey, cancellationToken);
             if (designation != null)
             {
                 throw new BadRequestException("Designation already exists.");
@@ -22,6 +22,7 @@ namespace EmployeeTracker.CQRS.Designations.CreateDesignation
             var newDesignation = new Designation
             {
                 DesignationName = command.DesignationName,
+                DesignationKey = command.DesignationKey,
                 Description = command.Description,
             };
 

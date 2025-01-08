@@ -13,7 +13,9 @@ namespace EmployeeTracker.CQRS.Departments.GetDepartments
         {
             return await _unitOfWork.DepartmentManager.AsNoTracking().Include(x => x.Employees).Select(x => new DepartmentResponseDto
             {
+                DepartmentId = x.DepartmentId,
                 DepartmentName = x.DepartmentName,
+                DepartmentKey = x.DepartmentKey,
                 Description = x.Description,
                 EmployeeCount = x.Employees != null ? x.Employees.Count() : 0,
             }).ToListAsync(cancellationToken);

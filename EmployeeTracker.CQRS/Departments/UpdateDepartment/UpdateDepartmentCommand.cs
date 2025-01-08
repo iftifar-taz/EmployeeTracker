@@ -6,6 +6,7 @@ namespace EmployeeTracker.CQRS.Departments.UpdateDepartment
     {
         public Guid DepartmentId { get; set; }
         public required string DepartmentName { get; set; }
+        public required string DepartmentKey { get; set; }
         public string? Description { get; set; }
     }
 }

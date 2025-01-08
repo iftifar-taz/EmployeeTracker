@@ -14,7 +14,7 @@ namespace EmployeeTracker.CQRS.Departments.CreateDepartment
 
         public async Task Handle(CreateDepartmentCommand command, CancellationToken cancellationToken)
         {
-            var department = await _unitOfWork.DepartmentManager.FirstOrDefaultAsync(x => string.Equals(x.DepartmentName, command.DepartmentName, StringComparison.OrdinalIgnoreCase), cancellationToken);
+            var department = await _unitOfWork.DepartmentManager.FirstOrDefaultAsync(x => x.DepartmentKey == command.DepartmentKey, cancellationToken);
             if (department != null)
             {
                 throw new BadRequestException("Department already exists.");
@@ -22,6 +22,7 @@ namespace EmployeeTracker.CQRS.Departments.CreateDepartment
             var newDepartment = new Department
             {
                 DepartmentName = command.DepartmentName,
+                DepartmentKey = command.DepartmentKey,
                 Description = command.Description,
             };
 

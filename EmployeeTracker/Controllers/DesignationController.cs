@@ -47,7 +47,7 @@ namespace EmployeeTracker.Controllers
         {
             command.DesignationId = designationId;
             await _mediator.Send(command);
-            return Created();
+            return Ok();
         }
 
         [Authorize(Roles = "Admin")]
@@ -55,7 +55,7 @@ namespace EmployeeTracker.Controllers
         public async Task<IActionResult> DeleteDesignation([FromRoute] Guid designationId)
         {
             await _mediator.Send(new DeleteDesignationCommand(designationId));
-            return Created();
+            return Ok();
         }
     }
 }
