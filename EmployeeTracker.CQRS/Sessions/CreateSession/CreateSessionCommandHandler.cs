@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using EmployeeTracker.Context.Contracts;
 using EmployeeTracker.Context.Schemas;
+using EmployeeTracker.Utils.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -23,13 +24,13 @@ namespace EmployeeTracker.CQRS.Sessions.CreateSession
             if (user is null)
             {
                 _logger.LogWarning($"Invalid Credentials for {command.Email}");
-                throw new Exception("Invalid Credentials");
-            }    
+                throw new BadRequestException("Invalid Credentials");
+            }
             var result = await _unitOfWork.UserManager.CheckPasswordAsync(user, command.PasswordRaw);
             if (!result)
             {
                 _logger.LogWarning($"Invalid Credentials for {command.Email}");
-                throw new Exception("Invalid Credentials");
+                throw new BadRequestException("Invalid Credentials");
             }
 
             var token = await GenerateToken(user);

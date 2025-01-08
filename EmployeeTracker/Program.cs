@@ -1,17 +1,16 @@
 using System.Text;
 using Asp.Versioning;
-using Asp.Versioning.ApiExplorer;
 using EmployeeTracker.Context;
 using EmployeeTracker.Context.Contracts;
 using EmployeeTracker.Context.Schemas;
 using EmployeeTracker.Context.Seeding;
 using EmployeeTracker.CQRS.Sessions.CreateSession;
+using EmployeeTracker.Middlewares;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -83,8 +82,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen(x =>
 {
-    x.SwaggerDoc("v1", new OpenApiInfo{ Title = "V1", Version = "v1" });
-    x.SwaggerDoc("v2", new OpenApiInfo{ Title = "V2", Version = "v2" });
+    x.SwaggerDoc("v1", new OpenApiInfo { Title = "V1", Version = "v1" });
+    x.SwaggerDoc("v2", new OpenApiInfo { Title = "V2", Version = "v2" });
 
     x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -139,8 +138,11 @@ app.UseCors(options =>
     options.AllowAnyOrigin();
 });
 
+app.UseMiddleware<RateLimitingMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.MapControllers();
 

@@ -19,15 +19,8 @@ namespace EmployeeTracker.Controllers
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
         {
             _logger.LogInformation("GetUsers called");
-            try
-            {
-                var response = await _mediator.Send(new GetUsersQuery());
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var response = await _mediator.Send(new GetUsersQuery());
+            return Ok(response);
         }
     }
 }

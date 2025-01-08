@@ -17,15 +17,8 @@ namespace EmployeeTracker.Controllers
         public async Task<ActionResult<SessionResponseDto>> CreateSession([FromBody] CreateSessionCommand command)
         {
             _logger.LogInformation("CreateSession called");
-            try
-            {
-                var response = await _mediator.Send(command);
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

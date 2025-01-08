@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\EmployeeTracker.Context\EmployeeTracker.Context.csproj" />
+	  <ProjectReference Include="..\EmployeeTracker.Utils\EmployeeTracker.Utils.csproj" />
 	</ItemGroup>
 
 </Project>
