@@ -10,7 +10,7 @@ namespace EmployeeTracker.CQRS.Users.GetUsers
 
         public async Task<IEnumerable<UserResponseDto>> Handle(GetUsersQuery query, CancellationToken cancellationToken)
         {
-            return await _unitOfWork.UserManager.Users.Select(x => new UserResponseDto
+            return await _unitOfWork.UserManager.Users.AsNoTracking().Select(x => new UserResponseDto
             {
                 UserId = x.Id,
                 Email = x.Email,

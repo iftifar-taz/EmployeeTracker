@@ -5,7 +5,7 @@ namespace EmployeeTracker.Context.Schemas
     public class Department
     {
         [Key]
-        public Guid DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; } = Guid.NewGuid();
         [MaxLength(64)]
         public required string DepartmentName { get; set; }
         public string? Description { get; set; }

@@ -5,7 +5,7 @@ namespace EmployeeTracker.Context.Schemas
     public class Employee
     {
         [Key]
-        public Guid EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; } = Guid.NewGuid();
         [MaxLength(64)]
         public string? FirstName { get; set; }
         [MaxLength(64)]

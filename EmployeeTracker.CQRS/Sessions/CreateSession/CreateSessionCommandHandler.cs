@@ -40,6 +40,7 @@ namespace EmployeeTracker.CQRS.Sessions.CreateSession
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddMinutes(refrshTokenValidityIn);
             await _unitOfWork.UserManager.UpdateAsync(user);
             await _unitOfWork.SaveChangesAsync();
+            _logger.LogWarning($"{command.Email} created token.");
             return new SessionResponseDto
             {
                 Token = token,

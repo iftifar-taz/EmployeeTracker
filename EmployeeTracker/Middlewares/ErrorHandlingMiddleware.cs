@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using EmployeeTracker.Utils.Exceptions;
-using Microsoft.AspNetCore.Http;
 
 namespace EmployeeTracker.Middlewares
 {
