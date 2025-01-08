@@ -1,4 +1,6 @@
 using System.Text;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using EmployeeTracker.Context;
 using EmployeeTracker.Context.Contracts;
 using EmployeeTracker.Context.Schemas;
@@ -9,6 +11,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -22,20 +25,38 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 var JWTSetting = builder.Configuration.GetSection("JWTSetting");
+
 builder.Services.AddDbContext<DataContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssemblyContaining<CreateSessionCommand>();
 });
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateSessionCommandValidator>();
 builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,6 +83,9 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen(x =>
 {
+    x.SwaggerDoc("v1", new OpenApiInfo{ Title = "V1", Version = "v1" });
+    x.SwaggerDoc("v2", new OpenApiInfo{ Title = "V2", Version = "v2" });
+
     x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization.",
@@ -70,7 +94,6 @@ builder.Services.AddSwaggerGen(x =>
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-
     x.AddSecurityRequirement(new OpenApiSecurityRequirement() {
         {
             new OpenApiSecurityScheme
@@ -90,6 +113,7 @@ builder.Services.AddSwaggerGen(x =>
 });
 
 var app = builder.Build();
+
 app.UseSerilogRequestLogging();
 
 // Seed data
@@ -99,7 +123,11 @@ await DbSeeder.SeedUsersAndRolesAsync(app.Services);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint($"/swagger/v1/swagger.json", "V1");
+        options.SwaggerEndpoint($"/swagger/v2/swagger.json", "V2");
+    });
 }
 
 app.UseHttpsRedirection();

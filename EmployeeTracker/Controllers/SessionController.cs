@@ -1,11 +1,13 @@
+using Asp.Versioning;
 using EmployeeTracker.CQRS.Sessions.CreateSession;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeTracker.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/sessions")]
+    [Route("api/v{version:apiVersion}/sessions")]
     public class SessionController(IMediator mediator, ILogger<SessionController> logger) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

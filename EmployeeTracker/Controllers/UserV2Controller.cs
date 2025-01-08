@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace EmployeeTracker.Controllers
 {
     [Authorize]
-    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     [Route("api/v{version:apiVersion}/users")]
-    public class UserController(IMediator mediator, ILogger<UserController> logger) : ControllerBase
+    public class UserV2Controller(IMediator mediator, ILogger<UserV2Controller> logger) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
-        private readonly ILogger<UserController> _logger = logger;
+        private readonly ILogger<UserV2Controller> _logger = logger;
 
         [HttpGet("", Name = "GetUsers")]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
