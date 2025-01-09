@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using EmployeeTracker.Application.DTOs;
 using EmployeeTracker.Application.Features.Sessions.CreateSession;
+using EmployeeTracker.Application.Features.Sessions.RefreshSession;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,14 @@ namespace EmployeeTracker.Web.Controllers
         public async Task<ActionResult<SessionResponseDto>> CreateSession([FromBody] CreateSessionCommand command)
         {
             _logger.LogInformation("CreateSession called");
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpPost("refresh-session", Name = "RefreshSession")]
+        public async Task<ActionResult<SessionResponseDto>> RefreshSession([FromBody] RefreshSessionCommand command)
+        {
+            _logger.LogInformation("RefreshSession called");
             var response = await _mediator.Send(command);
             return Ok(response);
         }

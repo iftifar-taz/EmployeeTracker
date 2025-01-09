@@ -5,6 +5,7 @@ using EmployeeTracker.Application.Features.Sessions.CreateSession;
 using EmployeeTracker.Core.Domain.Entities;
 using EmployeeTracker.Core.Interfaces;
 using EmployeeTracker.Infrastructure.Persistence;
+using EmployeeTracker.Infrastructure.Services;
 using EmployeeTracker.Web.Middlewares;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -30,6 +31,7 @@ builder.Services.AddDbContext<DataContext>(o => o.UseSqlServer(builder.Configura
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 
 builder.Services.AddMediatR(config =>
 {
