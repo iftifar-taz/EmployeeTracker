@@ -12,7 +12,7 @@ namespace EmployeeTracker.Context
 
         public UserManager<User> UserManager { get; } = userManager;
         public RoleManager<IdentityRole> RoleManager { get; } = roleManager;
-        public DbSet<Employee> Employeemanager { get; } = context.Employees;
+        public DbSet<Employee> EmployeeManager { get; } = context.Employees;
         public DbSet<Designation> DesignationManager { get; } = context.Designations;
         public DbSet<Department> DepartmentManager { get; } = context.Departments;
 

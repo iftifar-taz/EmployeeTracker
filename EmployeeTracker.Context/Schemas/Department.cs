@@ -11,6 +11,6 @@ namespace EmployeeTracker.Context.Schemas
         [MaxLength(16)]
         public required string DepartmentKey { get; set; }
         public string? Description { get; set; }
-        public ICollection<Employee>? Employees { get; set; }
+        public virtual ICollection<Employee>? Employees { get; set; }
     }
 }

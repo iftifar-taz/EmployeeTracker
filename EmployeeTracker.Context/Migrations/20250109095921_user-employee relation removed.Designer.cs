@@ -4,6 +4,7 @@ using EmployeeTracker.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeTracker.Context.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250109095921_user-employee relation removed")]
+    partial class useremployeerelationremoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,13 +100,10 @@ namespace EmployeeTracker.Context.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfJoining")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfResignation")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("DepartmentId")
@@ -111,11 +111,6 @@ namespace EmployeeTracker.Context.Migrations
 
                     b.Property<Guid>("DesignationId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(64)
@@ -125,11 +120,6 @@ namespace EmployeeTracker.Context.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");

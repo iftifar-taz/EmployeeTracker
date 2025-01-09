@@ -10,8 +10,13 @@ namespace EmployeeTracker.Context.Schemas
         public string? FirstName { get; set; }
         [MaxLength(64)]
         public required string LastName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        [MaxLength(64)]
+        public required string Email { get; set; }
+        [MaxLength(64)]
+        public required string PhoneNumber { get; set; }
+        public required DateTime DateOfBirth { get; set; }
         public required DateTime DateOfJoining { get; set; }
+        public DateTime? DateOfResignation { get; set; }
         [MaxLength(256)]
         public required string Address { get; set; }
         [MaxLength(32)]
@@ -23,8 +28,6 @@ namespace EmployeeTracker.Context.Schemas
         [MaxLength(16)]
         public required string PostalCode { get; set; }
         public required bool IsActive { get; set; }
-        public required User User { get; set; }
-        public required string UserId { get; set; }
         public required Department Department { get; set; }
         public required Guid DepartmentId { get; set; }
         public required Designation Designation { get; set; }

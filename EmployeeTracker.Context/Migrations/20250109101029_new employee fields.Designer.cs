@@ -4,6 +4,7 @@ using EmployeeTracker.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeTracker.Context.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250109101029_new employee fields")]
+    partial class newemployeefields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,13 +100,10 @@ namespace EmployeeTracker.Context.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("nvarchar(32)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfJoining")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfResignation")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("DepartmentId")

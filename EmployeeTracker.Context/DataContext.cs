@@ -18,8 +18,6 @@ namespace EmployeeTracker.Context
             builder.Entity<Department>().HasIndex(u => u.DepartmentName).IsUnique();
             builder.Entity<Designation>().HasIndex(u => u.DesignationName).IsUnique();
 
-            builder.Entity<Employee>().HasOne(e => e.User).WithOne(u => u.Employee).HasForeignKey<Employee>(e => e.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-
             builder.Entity<Employee>().HasOne(x => x.Designation).WithMany(x => x.Employees).HasForeignKey(x => x.DesignationId).OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Employee>().HasOne(x => x.Department).WithMany(x => x.Employees).HasForeignKey(x => x.DepartmentId).OnDelete(DeleteBehavior.Cascade);
         }

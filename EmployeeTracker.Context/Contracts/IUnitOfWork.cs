@@ -6,7 +6,7 @@ namespace EmployeeTracker.Context.Contracts
 {
     public interface IUnitOfWork
     {
-        public DbSet<Employee> Employeemanager { get; }
+        public DbSet<Employee> EmployeeManager { get; }
         public DbSet<Designation> DesignationManager { get; }
         public DbSet<Department> DepartmentManager { get; }
         public UserManager<User> UserManager { get; }
