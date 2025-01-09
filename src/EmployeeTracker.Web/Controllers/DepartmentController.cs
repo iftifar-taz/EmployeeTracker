@@ -34,7 +34,7 @@ namespace EmployeeTracker.Web.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpPost("", Name = "CreateDepartment")]
         public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentCommand command)
         {
@@ -42,7 +42,7 @@ namespace EmployeeTracker.Web.Controllers
             return Created();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpPut("{departmentId}", Name = "UpdateDepartment")]
         public async Task<IActionResult> UpdateDepartment([FromRoute] Guid departmentId, [FromBody] UpdateDepartmentCommand command)
         {
@@ -51,7 +51,7 @@ namespace EmployeeTracker.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpDelete("{departmentId}", Name = "DeleteDepartment")]
         public async Task<IActionResult> DeleteDepartment([FromRoute] Guid departmentId)
         {

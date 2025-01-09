@@ -16,6 +16,7 @@ namespace EmployeeTracker.Web.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly ILogger<UserController> _logger = logger;
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("", Name = "GetUsers")]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
         {

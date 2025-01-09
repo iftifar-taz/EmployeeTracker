@@ -34,7 +34,7 @@ namespace EmployeeTracker.Web.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpPost("", Name = "CreateDesignation")]
         public async Task<IActionResult> CreateDesignation([FromBody] CreateDesignationCommand command)
         {
@@ -42,7 +42,7 @@ namespace EmployeeTracker.Web.Controllers
             return Created();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpPut("{designationId}", Name = "UpdateDesignation")]
         public async Task<IActionResult> UpdateDesignation([FromRoute] Guid designationId, [FromBody] UpdateDesignationCommand command)
         {
@@ -51,7 +51,7 @@ namespace EmployeeTracker.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Moderator")]
         [HttpDelete("{designationId}", Name = "DeleteDesignation")]
         public async Task<IActionResult> DeleteDesignation([FromRoute] Guid designationId)
         {

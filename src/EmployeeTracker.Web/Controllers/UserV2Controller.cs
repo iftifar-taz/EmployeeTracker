@@ -16,19 +16,13 @@ namespace EmployeeTracker.Web.Controllers
         private readonly IMediator _mediator = mediator;
         private readonly ILogger<UserV2Controller> _logger = logger;
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("", Name = "GetUsers")]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUsers()
         {
             _logger.LogInformation("GetUsers called");
-            try
-            {
-                var response = await _mediator.Send(new GetUsersQuery());
-                return Ok(response);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            var response = await _mediator.Send(new GetUsersQuery());
+            return Ok(response);
         }
     }
 }

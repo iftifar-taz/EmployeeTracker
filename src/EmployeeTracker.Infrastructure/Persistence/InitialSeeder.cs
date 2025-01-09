@@ -13,7 +13,7 @@ namespace EmployeeTracker.Infrastructure.Persistence
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             // Seed roles
-            var roles = new[] { "Admin", "User" };
+            var roles = new[] { "Admin", "Moderator", "User" };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
@@ -39,6 +39,46 @@ namespace EmployeeTracker.Infrastructure.Persistence
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
+
+            // Seed moderator user
+            const string moderatorEmail = "moderator@example.com";
+            const string moderatorPassword = "Pa$$w0rd";
+
+            if (await userManager.FindByEmailAsync(moderatorEmail) == null)
+            {
+                var moderatorUser = new User
+                {
+                    UserName = moderatorEmail,
+                    Email = moderatorEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(moderatorUser, moderatorPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(moderatorUser, "Moderator");
+                }
+            }
+
+            // Seed user user
+            const string userEmail = "user@example.com";
+            const string userPassword = "Pa$$w0rd";
+
+            if (await userManager.FindByEmailAsync(userEmail) == null)
+            {
+                var userUser = new User
+                {
+                    UserName = userEmail,
+                    Email = userEmail,
+                    EmailConfirmed = true
+                };
+
+                var result = await userManager.CreateAsync(userUser, userPassword);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(userUser, "User");
                 }
             }
         }
