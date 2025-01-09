@@ -3,6 +3,7 @@ using EmployeeTracker.CQRS.Designations.Common;
 using EmployeeTracker.CQRS.Designations.CreateDesignation;
 using EmployeeTracker.CQRS.Designations.DeleteDesignation;
 using EmployeeTracker.CQRS.Designations.GetDesignation;
+using EmployeeTracker.CQRS.Designations.GetDesignationEmployees;
 using EmployeeTracker.CQRS.Designations.GetDesignations;
 using EmployeeTracker.CQRS.Designations.UpdateDesignation;
 using MediatR;
@@ -56,6 +57,13 @@ namespace EmployeeTracker.Controllers
         {
             await _mediator.Send(new DeleteDesignationCommand(designationId));
             return Ok();
+        }
+
+        [HttpGet("{designationId}/employees", Name = "GetDesignationEmployees")]
+        public async Task<ActionResult<IEnumerable<DesignationEmployeeResponseDto>>> GetDesignationEmployees([FromRoute] Guid designationId)
+        {
+            var response = await _mediator.Send(new GetDesignationEmployeesQuery(designationId));
+            return Ok(response);
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using EmployeeTracker.Context.Contracts;
-using EmployeeTracker.CQRS.Employees.UpdateEmployee;
 using EmployeeTracker.Utils.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace EmployeeTracker.CQRS.Employees.CreateEmployee
+namespace EmployeeTracker.CQRS.Employees.UpdateEmployee
 {
     public class UpdateEmployeeCommandHandler(IUnitOfWork unitOfWork, ILogger<UpdateEmployeeCommandHandler> logger) : IRequestHandler<UpdateEmployeeCommand>
     {

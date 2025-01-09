@@ -3,6 +3,7 @@ using EmployeeTracker.CQRS.Departments.Common;
 using EmployeeTracker.CQRS.Departments.CreateDepartment;
 using EmployeeTracker.CQRS.Departments.DeleteDepartment;
 using EmployeeTracker.CQRS.Departments.GetDepartment;
+using EmployeeTracker.CQRS.Departments.GetDepartmentEmployees;
 using EmployeeTracker.CQRS.Departments.GetDepartments;
 using EmployeeTracker.CQRS.Departments.UpdateDepartment;
 using MediatR;
@@ -56,6 +57,13 @@ namespace EmployeeTracker.Controllers
         {
             await _mediator.Send(new DeleteDepartmentCommand(departmentId));
             return Ok();
+        }
+
+        [HttpGet("{departmentId}/employees", Name = "GetDepartmentEmployees")]
+        public async Task<ActionResult<IEnumerable<DepartmentEmployeeResponseDto>>> GetDepartmentEmployees([FromRoute] Guid departmentId)
+        {
+            var response = await _mediator.Send(new GetDepartmentEmployeesQuery(departmentId));
+            return Ok(response);
         }
     }
 }
