@@ -1,0 +1,22 @@
+﻿using EmployeeTracker.Application.Exceptions;
+using EmployeeTracker.Core.Interfaces;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace EmployeeTracker.Application.Features.Designations.DeleteDesignation
+{
+    public class DeleteDesignationCommandHandler(IUnitOfWork unitOfWork, ILogger<DeleteDesignationCommandHandler> logger) : IRequestHandler<DeleteDesignationCommand>
+    {
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly ILogger<DeleteDesignationCommandHandler> _logger = logger;
+
+        public async Task Handle(DeleteDesignationCommand command, CancellationToken cancellationToken)
+        {
+            var designation = await _unitOfWork.DesignationManager.FirstOrDefaultAsync(x => x.DesignationId == command.DesignationId, cancellationToken) ?? throw new BadRequestException("Designation does not exist.");
+            _unitOfWork.DesignationManager.Remove(designation);
+            await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Designation deleted.");
+        }
+    }
+}
