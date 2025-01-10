@@ -1,15 +1,35 @@
-﻿services:
-  webapi:
+﻿version: "3.8"
+
+services:
+  employeemanager-employee:
+    image: employeemanager-employee
+    container_name: employeemanager-employee-container
     build:
-      context: .
+      context: ./EmployeeManager
       dockerfile: Dockerfile
-    image: employee-tracker
-    container_name: employee-tracker-container
     ports:
-      - "7000:8080"
+      - "5040:5040"
+      - "5041:5041"
+      - "9040:9040"
+      - "9041:9041"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__ProductDbContext=Server=host.docker.internal,1433;Database=EmployeeTracker;User Id=sa;Password=Pa$$w0rd;TrustServerCertificate=true
+      - DOTNET_ENVIRONMENT=Production
+    networks:
+      - my_network
+
+  employeemanager-identity:
+    image: employeemanager-identity
+    container_name: employeemanager-identity-container
+    build:
+      context: ./Identity
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
+      - "5051:5051"
+      - "9050:9050"
+      - "9051:9051"
+    environment:
+      - DOTNET_ENVIRONMENT=Production
     networks:
       - my_network
 

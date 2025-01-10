@@ -1,0 +1,45 @@
+# Use the .NET 8 SDK for building the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy solution and project files to restore dependencies
+COPY *.sln ./
+COPY src/EmployeeManager.Web/*.csproj ./src/EmployeeManager.Web/
+COPY src/EmployeeManager.Infrastructure/*.csproj ./src/EmployeeManager.Infrastructure/
+COPY src/EmployeeManager.Core/*.csproj ./src/EmployeeManager.Core/
+COPY src/EmployeeManager.Application/*.csproj ./src/EmployeeManager.Application/
+
+# Restore dependencies
+RUN dotnet restore ./src/EmployeeManager.Web/EmployeeManager.Web.csproj
+
+# Copy the entire source code to the container
+COPY . ./
+
+# Set the working directory for publishing
+WORKDIR /app/src/EmployeeManager.Web
+
+# Build and publish the application
+RUN dotnet publish -c Release -o /out
+
+# Use a lightweight runtime image for deploying the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the published output from the build stage
+COPY --from=build /out .
+
+# Set environment variables
+ENV DOTNET_ENVIRONMENT=Production
+
+# Expose application ports for HTTP and HTTPS
+EXPOSE 5040
+EXPOSE 5041
+EXPOSE 9040
+EXPOSE 9041
+
+# Define the entry point for the container
+ENTRYPOINT ["dotnet", "EmployeeManager.Web.dll"]

@@ -1,0 +1,45 @@
+# Use the .NET 8 SDK for building the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy solution and project files to restore dependencies
+COPY *.sln ./
+COPY src/Identity.Web/*.csproj ./src/Identity.Web/
+COPY src/Identity.Infrastructure/*.csproj ./src/Identity.Infrastructure/
+COPY src/Identity.Core/*.csproj ./src/Identity.Core/
+COPY src/Identity.Application/*.csproj ./src/Identity.Application/
+
+# Restore dependencies
+RUN dotnet restore ./src/Identity.Web/Identity.Web.csproj
+
+# Copy the entire source code to the container
+COPY . ./
+
+# Set the working directory for publishing
+WORKDIR /app/src/Identity.Web
+
+# Build and publish the application
+RUN dotnet publish -c Release -o /out
+
+# Use a lightweight runtime image for deploying the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the published output from the build stage
+COPY --from=build /out .
+
+# Set environment variables
+ENV DOTNET_ENVIRONMENT=Production
+
+# Expose application ports for HTTP and HTTPS
+EXPOSE 5050
+EXPOSE 5051
+EXPOSE 9050
+EXPOSE 9051
+
+# Define the entry point for the container
+ENTRYPOINT ["dotnet", "Identity.Web.dll"]
