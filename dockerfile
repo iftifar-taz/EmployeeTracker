@@ -30,11 +30,8 @@ ENV DOTNET_ENVIRONMENT=Production
 COPY --from=build /out .
 
 # Expose the application's port
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 8081
 
 # Define the entry point for the container
 ENTRYPOINT ["dotnet", "EmployeeTracker.Web.dll"]
-
-# Run migrations and then start the app
-CMD ["sh", "-c", "dotnet ef database update && dotnet EmployeeTracker.Web.dll"]
