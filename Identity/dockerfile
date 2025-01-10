@@ -36,10 +36,8 @@ COPY --from=build /out .
 ENV DOTNET_ENVIRONMENT=Production
 
 # Expose application ports for HTTP and HTTPS
-EXPOSE 5050
-EXPOSE 5051
-EXPOSE 9050
-EXPOSE 9051
+EXPOSE 8080
+EXPOSE 8081
 
 # Define the entry point for the container
 ENTRYPOINT ["dotnet", "Identity.Web.dll"]
