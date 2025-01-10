@@ -40,17 +40,14 @@ namespace EmployeeManager.Web.Configurations
             return services;
         }
 
-        public static void UseSwaggerIfDevelopment(this IApplicationBuilder app, IHostEnvironment env)
+        public static void UseSwaggerIfDevelopment(this IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
-                    options.SwaggerEndpoint("/swagger/v2/swagger.json", "V2");
-                });
-            }
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+                options.SwaggerEndpoint("/swagger/v2/swagger.json", "V2");
+            });
         }
     }
 }

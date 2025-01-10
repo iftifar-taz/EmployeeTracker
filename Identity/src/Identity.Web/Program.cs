@@ -24,7 +24,7 @@ var app = builder.Build();
 await app.ApplyPendingMigrations();
 
 app.UseRequestLogging();
-app.UseSwaggerIfDevelopment(app.Environment);
+app.UseSwaggerIfDevelopment();
 
 app.UseHttpsRedirection();
 app.UseCorseForAll();
