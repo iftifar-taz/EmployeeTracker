@@ -22,7 +22,7 @@ Before getting started, ensure you have the following installed:
 1. **Clone the repository**  
    First, clone the repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/EmployeeManager.git
+   git clone https://github.com/iftifar-taz/EmployeeTracker.git
    cd EmployeeManager
    ```
 
