@@ -18,6 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+app.ApplyPendingMigrations();
+
 app.UseRequestLogging();
 app.UseSwaggerIfDevelopment(app.Environment);
 

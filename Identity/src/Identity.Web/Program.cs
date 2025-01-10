@@ -21,7 +21,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-await DbSeeder.SeedUsersAndRolesAsync(app.Services);
+await app.ApplyPendingMigrations();
 
 app.UseRequestLogging();
 app.UseSwaggerIfDevelopment(app.Environment);

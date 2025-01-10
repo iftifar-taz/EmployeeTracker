@@ -1,6 +1,4 @@
-﻿version: "3.8"
-
-services:
+﻿services:
   employeemanager-employee:
     image: employeemanager-employee
     container_name: employeemanager-employee-container
@@ -12,6 +10,7 @@ services:
       - "9081:8081"
     environment:
       - DOTNET_ENVIRONMENT=Production
+    depends_on: [mssql, seqlogs]
     networks:
       - my_network
 
@@ -26,6 +25,32 @@ services:
       - "9091:8081"
     environment:
       - DOTNET_ENVIRONMENT=Production
+    depends_on: [mssql, seqlogs]
+    networks:
+      - my_network
+
+  mssql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: employeemanager-mssql
+    hostname: mssql
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=Str0ngP@ssw0rd
+      - ACCEPT_EULA=Y
+    restart: unless-stopped
+    networks:
+      - my_network
+
+  seqlogs:
+    image: datalust/seq
+    container_name: employeemanager-seqlogs
+    hostname: seqlogs
+    ports:
+      - "5342:80"
+    environment:
+      - ACCEPT_EULA=Y
+    restart: unless-stopped
     networks:
       - my_network
 
