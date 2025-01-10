@@ -1,0 +1,11 @@
+@EmployeeManager.Web_HostAddress = https://localhost:7029
+
+POST {{EmployeeManager.Web_HostAddress}}/api/v1/sessions
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "passwordRaw": "Pa$$w0rd"
+}
+
+###
