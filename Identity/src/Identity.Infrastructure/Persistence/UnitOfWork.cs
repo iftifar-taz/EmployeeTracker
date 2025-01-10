@@ -1,7 +1,6 @@
 ﻿using Identity.Core.Domain.Entities;
 using Identity.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Infrastructure.Persistence
 {

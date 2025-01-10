@@ -1,5 +1,7 @@
 ﻿using Asp.Versioning;
 using Identity.Application.DTOs;
+using Identity.Application.Features.Users.CreateUser;
+using Identity.Application.Features.Users.DeleteUser;
 using Identity.Application.Features.Users.GetUsers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +25,33 @@ namespace Identity.Web.Controllers
             _logger.LogInformation("GetUsers called");
             var response = await _mediator.Send(new GetUsersQuery());
             return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{userId}", Name = "GetUser")]
+        public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetUser([FromRoute] string userId)
+        {
+            _logger.LogInformation("GetUser called");
+            var response = await _mediator.Send(new GetUserQuery(userId));
+            return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("", Name = "CreateUser")]
+        public async Task<ActionResult<IEnumerable<UserResponseDto>>> CreateUser([FromBody] CreateUserCommand command)
+        {
+            _logger.LogInformation("CreateUser called");
+            await _mediator.Send(command);
+            return Created();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{userId}", Name = "DeleteUser")]
+        public async Task<ActionResult<IEnumerable<UserResponseDto>>> DeleteUser([FromRoute] string userId)
+        {
+            _logger.LogInformation("DeleteUser called");
+            await _mediator.Send(new DeleteUserCommand(userId));
+            return Ok();
         }
     }
 }

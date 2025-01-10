@@ -1,5 +1,5 @@
-﻿using Identity.Application.Features.Sessions.RefreshSession;
-using FluentValidation;
+﻿using FluentValidation;
+using Identity.Application.Features.Sessions.RefreshSession;
 
 namespace Identity.Application.Behaviors.Validators
 {

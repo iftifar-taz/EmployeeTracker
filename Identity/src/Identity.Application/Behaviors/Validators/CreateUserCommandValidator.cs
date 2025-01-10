@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using Identity.Application.Features.Sessions.CreateSession;
+using Identity.Application.Features.Users.CreateUser;
 
 namespace Identity.Application.Behaviors.Validators
 {
-    public class CreateSessionCommandValidator : AbstractValidator<CreateSessionCommand>
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public CreateSessionCommandValidator()
+        public CreateUserCommandValidator()
         {
             RuleFor(x => x.Email)
                 .NotEmpty()
