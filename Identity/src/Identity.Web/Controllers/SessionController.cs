@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning;
-using Identity.Application.DTOs;
-using Identity.Application.Features.Sessions.CreateSession;
-using Identity.Application.Features.Sessions.RefreshSession;
+using Identity.Application.Dtos;
+using Identity.Application.Features.Sessions.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

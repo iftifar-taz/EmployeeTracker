@@ -2,7 +2,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Identity.Application.Behaviors.Validators;
-using Identity.Application.Features.Sessions.CreateSession;
+using Identity.Application.Features.Sessions.Commands;
 using Identity.Core.Interfaces;
 using Identity.Infrastructure.Persistence;
 using Identity.Infrastructure.Services;

@@ -1,0 +1,68 @@
+<h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+  Create Account
+</h2>
+
+<form action="#" method="POST">
+  <!-- Email input -->
+  <div class="mb-4">
+    <label for="email" class="block text-gray-600 font-medium"
+      >Email Address</label
+    >
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="Enter your email"
+      class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      required
+    />
+  </div>
+
+  <!-- Password input -->
+  <div class="mb-4">
+    <label for="password" class="block text-gray-600 font-medium"
+      >Password</label
+    >
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Create your password"
+      class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      required
+    />
+  </div>
+
+  <!-- Confirm Password input -->
+  <div class="mb-6">
+    <label for="confirm-password" class="block text-gray-600 font-medium"
+      >Confirm Password</label
+    >
+    <input
+      type="password"
+      id="confirm-password"
+      name="confirm-password"
+      placeholder="Confirm your password"
+      class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      required
+    />
+  </div>
+
+  <!-- Submit button -->
+  <button
+    type="submit"
+    class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    Sign Up
+  </button>
+</form>
+
+<!-- Already have an account link -->
+<div class="mt-4 text-center">
+  <p class="text-sm text-gray-600">
+    Already have an account?
+    <a [routerLink]="['/login']" class="text-blue-500 hover:text-blue-700"
+      >Login</a
+    >
+  </p>
+</div>

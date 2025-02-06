@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Identity.Application.Features.Users.CreateUser;
+using Identity.Application.Features.Users.Commands;
 
 namespace Identity.Application.Behaviors.Validators
 {

@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
-using Identity.Application.DTOs;
-using Identity.Application.Features.Users.GetUsers;
+using Identity.Application.Dtos;
+using Identity.Application.Features.Users.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

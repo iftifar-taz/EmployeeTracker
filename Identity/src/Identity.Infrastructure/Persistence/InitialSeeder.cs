@@ -13,7 +13,7 @@ namespace Identity.Infrastructure.Persistence
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             // Seed roles
-            var roles = new[] { "Admin", "Moderator", "User" };
+            var roles = new[] { "Admin", "User" };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
@@ -39,26 +39,6 @@ namespace Identity.Infrastructure.Persistence
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, "Admin");
-                }
-            }
-
-            // Seed moderator user
-            const string moderatorEmail = "moderator@example.com";
-            const string moderatorPassword = "Pa$$w0rd";
-
-            if (await userManager.FindByEmailAsync(moderatorEmail) == null)
-            {
-                var moderatorUser = new User
-                {
-                    UserName = moderatorEmail,
-                    Email = moderatorEmail,
-                    EmailConfirmed = true
-                };
-
-                var result = await userManager.CreateAsync(moderatorUser, moderatorPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(moderatorUser, "Moderator");
                 }
             }
 
